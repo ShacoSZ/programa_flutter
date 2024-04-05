@@ -59,7 +59,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
@@ -71,9 +71,12 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
-flutter:
+
 
   # The following line ensures that the Material Icons font is
+flutter:
+  assets:
+  - assets/rs_logo_shield_cuted.jpg
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true

@@ -50,7 +50,7 @@ class _checkconnectionpage extends StatefulWidget {
 
 class _checkconnectionState extends State<_checkconnectionpage> {
   Future<bool> _checkconnection() async {
- var url = Uri.parse('http://192.168.100.201:8000/api/v1/check-net');
+ var url = Uri.parse('http://192.168.1.56:8000/api/v1/check-net');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     print('Connected');
@@ -73,7 +73,7 @@ Future<bool> _checkconnectionWithTimeOut() async {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reporsoft'),
+        title: Text('Reporsoft Verification'),
       ),
       body: FutureBuilder<bool>(
         future: _checkconnectionWithTimeOut(),

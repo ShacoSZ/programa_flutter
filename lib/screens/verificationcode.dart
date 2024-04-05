@@ -52,7 +52,7 @@ class _verificationpageState extends State<verificationpage> {
             _initLoading();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
-    var url = Uri.parse('http://192.168.100.201:8000/api/v1/auth/logout');
+    var url = Uri.parse('http://192.168.1.56:8000/api/v1/auth/logout');
     if (token != null)
     {
       var headers = {'Authorization': 'Bearer $token'};
@@ -143,7 +143,7 @@ class _verificationpageState extends State<verificationpage> {
     _initLoading();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
-    var url = Uri.parse('http://192.168.100.201:8000/api/v1/auth/verify-code');
+    var url = Uri.parse('http://192.168.1.56:8000/api/v1/auth/verify-code');
     if (token != null)
     {
       var headers = {'Authorization': 'Bearer $token'};
@@ -161,6 +161,9 @@ class _verificationpageState extends State<verificationpage> {
       print(response.statusCode);
       print(response.reasonPhrase);
       _endLoading();
+      ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Invalid 2FA Code')),
+    );
     }
     }
   }

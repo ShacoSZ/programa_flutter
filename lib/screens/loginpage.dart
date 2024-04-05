@@ -48,11 +48,19 @@ void _initLoading() {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children:[Scaffold(
+    return Stack(children:[
+      Scaffold(
       appBar: AppBar(
         title: const Text('Login Page'),
       ),
-      body: Form(
+      body: ListView(children:[
+        const SizedBox(height: 40),
+            const Image(
+              image: AssetImage('assets/rs_logo_shield_cuted.jpg'),
+              width: 85,
+              height: 85,
+            ),
+        Form(
         key: _formKey,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -111,7 +119,7 @@ void _initLoading() {
             ],
           ),
         ),
-      ),
+      )]),
     ),
       Visibility(
           visible: _isloading,
@@ -125,7 +133,7 @@ void _initLoading() {
 
 void _login(String _email, String _password, BuildContext context) async {
   _initLoading();
-  var url = Uri.parse('http://192.168.100.201:8000/api/v1/auth/login');
+  var url = Uri.parse('http://192.168.1.56:8000/api/v1/auth/login');
   Map<String, String> data = {'email': _email, 'password': _password};
   final response = await http.post(url, body: data);
   if (response.statusCode == 200) {
