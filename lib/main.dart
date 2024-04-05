@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Reporsoft Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.lightGreen,
         ),
       ),
-      home: const _checkconnectionpage(title: 'Check Connection Page'), 
+      home: const _checkconnectionpage(), 
       //const loginpage(title: 'Login Page'),
     );
   }
@@ -41,9 +41,8 @@ class MyApp extends StatelessWidget {
 
 
 class _checkconnectionpage extends StatefulWidget {
-  const _checkconnectionpage({super.key, required this.title});
+  const _checkconnectionpage({super.key});
 
-   final String title;
 
   @override
   State<_checkconnectionpage> createState() => _checkconnectionState();
@@ -74,7 +73,7 @@ Future<bool> _checkconnectionWithTimeOut() async {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ejemplo de Flutter'),
+        title: Text('Reporsoft'),
       ),
       body: FutureBuilder<bool>(
         future: _checkconnectionWithTimeOut(),
@@ -91,7 +90,7 @@ Future<bool> _checkconnectionWithTimeOut() async {
             );
           } else if (snapshot.data == true) {
             // Si la llamada a la API es exitosa, navega a la siguiente pantalla
-            return loginpage(title: widget.title,);
+            return loginpage();
           } else {
             // Si la llamada a la API falla, muestra un pop-up con un mensaje
             return AlertDialog(
@@ -112,36 +111,4 @@ Future<bool> _checkconnectionWithTimeOut() async {
     );
   
 }
-}
-
-
-void _go_to_2FA_verification(BuildContext context,String email){
-  Navigator.push(context,MaterialPageRoute(builder: (context) => HomePage(email: email,)),);
-}
-
-class HomePage extends StatelessWidget {
-  const HomePage({super.key, required this.email});
-
-  final String email;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Home Page'),
-        ),
-        body: Column(
-          children: [
-            Text(email),
-            Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("Go back!"),
-              ),
-            ),
-          ],
-        ));
-  }
 }

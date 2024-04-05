@@ -10,19 +10,29 @@ import 'dart:convert';
 import 'package:programa_flutter/screens/verificationcode.dart';
 
 class loginpage extends StatefulWidget {
-  const loginpage({super.key, required this.title});
+  const loginpage({super.key});
 
-   final String title;
 
   @override
   State<loginpage> createState() => _loginpageState();
 }
 
+TextEditingController emailController = TextEditingController();
+TextEditingController passwordController = TextEditingController();
+void _clearfields() {
+  emailController.clear();
+  passwordController.clear();
+}
 class _loginpageState extends State<loginpage> {
   final _formKey = GlobalKey<FormState>();
   bool _isloading = false;
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void initState() { 
+    super.initState();
+    emailController.clear();
+  passwordController.clear();
+  }
 
 void _initLoading() {
     setState(() {
@@ -40,7 +50,7 @@ void _initLoading() {
   Widget build(BuildContext context) {
     return Stack(children:[Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: const Text('Login Page'),
       ),
       body: Form(
         key: _formKey,
@@ -136,6 +146,22 @@ void _login(String _email, String _password, BuildContext context) async {
 }
 
 void _go_to_2FA_verification(BuildContext context){
-  Navigator.push(context,MaterialPageRoute(builder: (context) => verificationpage(title: '2FA Verification',)),);
+
+  Route route = PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => verificationpage(title: '2FA Verification',),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = Offset(0.0, 1.0);
+      var end = Offset.zero;
+      var curve = Curves.easeOut;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+  Navigator.push(context, route);
 }
 }
