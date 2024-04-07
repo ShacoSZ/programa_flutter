@@ -27,10 +27,10 @@ class MyApp extends StatelessWidget {
       title: 'Reporsoft Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreen),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color.fromRGBO(39, 64, 91, 0.612)),
         useMaterial3: true,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.lightGreen,
+          backgroundColor:  Color.fromRGBO(39, 64, 91, 0.612),
         ),
       ),
       home: const _checkconnectionpage(), 
@@ -50,7 +50,7 @@ class _checkconnectionpage extends StatefulWidget {
 
 class _checkconnectionState extends State<_checkconnectionpage> {
   Future<bool> _checkconnection() async {
- var url = Uri.parse('http://192.168.1.56:8000/api/v1/check-net');
+ var url = Uri.parse('http://192.168.100.201:8000/api/v1/check-net');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     print('Connected');
