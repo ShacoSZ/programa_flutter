@@ -50,7 +50,7 @@ class _checkconnectionpage extends StatefulWidget {
 
 class _checkconnectionState extends State<_checkconnectionpage> {
   Future<bool> _checkconnection() async {
- var url = Uri.parse('http://192.168.100.201:8000/api/v1/check-net');
+ var url = Uri.parse('http://192.168.1.70:8000/api/v1/check-net');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     print('Connected');
@@ -60,6 +60,16 @@ class _checkconnectionState extends State<_checkconnectionpage> {
     return false;
   }
 }
+
+ bool isConnected = false; // Estado inicial: no conectado
+ bool enabledbutton =true;
+  Future<void> _checkAndRefresh() async {
+    final newConnectionStatus = await _checkconnectionWithTimeOut();
+    setState(() {
+      isConnected = newConnectionStatus;
+    });
+  }
+
 
 Future<bool> _checkconnectionWithTimeOut() async {
   try {
@@ -73,7 +83,7 @@ Future<bool> _checkconnectionWithTimeOut() async {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Reporsoft Verification'),
+        title: Text('Reportsoft Verification'),
       ),
       body: FutureBuilder<bool>(
         future: _checkconnectionWithTimeOut(),
@@ -85,8 +95,17 @@ Future<bool> _checkconnectionWithTimeOut() async {
             );
           } else if (snapshot.hasError) {
             // En caso de error, muestra un mensaje de error
-            return const Center(
-              child: Text('Error connecting data'),
+            return AlertDialog(
+              title: Text('Error'),
+              content: Text('It is not possible to connect to the internet'),
+              actions: <Widget>[
+                  TextButton(
+                  onPressed: (){
+                    SystemNavigator.pop();
+                  },
+                  child: Text('close app'),
+                ),
+              ],
             );
           } else if (snapshot.data == true) {
             // Si la llamada a la API es exitosa, navega a la siguiente pantalla
@@ -95,13 +114,11 @@ Future<bool> _checkconnectionWithTimeOut() async {
             // Si la llamada a la API falla, muestra un pop-up con un mensaje
             return AlertDialog(
               title: Text('Error'),
-              content: Text('It is not possible to connect through the API'),
+              content: Text('It is not possible to connect to the API'),
               actions: <Widget>[
-                TextButton(
-                  onPressed: () {
-                    SystemNavigator.pop();
-                  },
-                  child: Text('Close'),
+                  TextButton(
+                  onPressed: _checkAndRefresh,
+                  child: Text('Try Again'),
                 ),
               ],
             );
@@ -109,6 +126,5 @@ Future<bool> _checkconnectionWithTimeOut() async {
         },
       ),
     );
-  
 }
 }
