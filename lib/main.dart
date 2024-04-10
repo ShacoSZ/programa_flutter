@@ -50,7 +50,7 @@ class _checkconnectionpage extends StatefulWidget {
 
 class _checkconnectionState extends State<_checkconnectionpage> {
   Future<bool> _checkconnection() async {
- var url = Uri.parse('http://192.168.1.70:8000/api/v1/check-net');
+ var url = Uri.parse('http://192.168.100.201:8000/api/v1/check-net');
   final response = await http.get(url);
   if (response.statusCode == 200) {
     print('Connected');
@@ -100,10 +100,8 @@ Future<bool> _checkconnectionWithTimeOut() async {
               content: Text('It is not possible to connect to the internet'),
               actions: <Widget>[
                   TextButton(
-                  onPressed: (){
-                    SystemNavigator.pop();
-                  },
-                  child: Text('close app'),
+                  onPressed: _checkAndRefresh,
+                  child: Text('Try Again'),
                 ),
               ],
             );
